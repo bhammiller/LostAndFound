@@ -1,9 +1,6 @@
 package com.example.demo.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class LostItems {
@@ -20,6 +17,21 @@ public class LostItems {
     private String itemDescription;
 
     private Boolean foundStatus;
+
+    // Constructors
+
+    public LostItems() {
+    }
+
+    public LostItems(String itemType, String itemImage, String itemTitle,
+                     String itemDescription, Boolean foundStatus, AppUser appUser) {
+        this.itemType = itemType;
+        this.itemImage = itemImage;
+        this.itemTitle = itemTitle;
+        this.itemDescription = itemDescription;
+        this.foundStatus = foundStatus;
+        this.appUser = appUser;
+    }
 
     // Variable Getters and Setters
 
@@ -73,4 +85,16 @@ public class LostItems {
 
 
     // Connection to AppUsers
+    @ManyToOne
+    @JoinColumn
+    private AppUser appUser;
+
+    public AppUser getAppUser() {
+        return appUser;
+    }
+
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
+    }
+
 }

@@ -114,4 +114,23 @@ public class AppUser {
     }
 
     // Connection to LostItems
+    @OneToMany(mappedBy = "appUser")
+    private List<LostItems> lostItemsList;
+
+    public void addLostItems(LostItems lostItems) {
+        this.lostItemsList.add(lostItems);
+    }
+
+    public AppUser(List<LostItems> lostItemsList) {
+        this.lostItemsList = lostItemsList;
+    }
+
+    public List<LostItems> getLostItemsList() {
+        return lostItemsList;
+    }
+
+    public void setLostItemsList(List<LostItems> lostItemsList) {
+        this.lostItemsList = lostItemsList;
+    }
 }
+
