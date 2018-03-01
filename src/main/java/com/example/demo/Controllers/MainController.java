@@ -25,6 +25,9 @@ public class MainController {
     @Autowired
     AppUserRepository appUserRepository;
 
+    @Autowired
+    LostItemsRepository lostItemsRepository;
+
 
     /////////////// METHODS //////////////////
 
@@ -63,8 +66,133 @@ public class MainController {
         }
     }
 
-    // Lost Item methods
+    // Lost Item methods ///////////
 
-    /*public String addLostItem(){}*/
+    // Listing Methods
+    @RequestMapping("/lostlist")
+    public String showLostList(Model model){
+        model.addAttribute("listed",lostItemsRepository.findAllByFoundStatusIs(false) );
+        return "itemlistpage";
+    }
 
+    @RequestMapping("/foundlist")
+    public String showFoundList(Model model){
+        model.addAttribute("listed", lostItemsRepository.findAllByFoundStatusIs(true));
+        return "itemlistpage";
+    }
+
+    @RequestMapping("/clotheslist")
+    public String showLostClothes(Model model){
+        model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("clothes"));
+        return "itemlistpage";
+    }
+
+    @RequestMapping("/petlist")
+    public String showLostPets(Model model){
+        model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("pet"));
+        return "itemlistpage";
+    }
+
+    @RequestMapping("/otherlist")
+    public String showLostOther(Model model){
+        model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("other"));
+        return "itemlistpage";
+    }
+
+    @RequestMapping("/usersfound")
+    public String showUsersFoundItems(Model model, Authentication authentication){
+        AppUser appUser = appUserRepository.findAppUserByAppUsername(authentication.getName());
+        List<LostItems> lostItems1 = appUser.getLostItemsList();
+        List<LostItems> lostItems3 = new ArrayList<>();
+        for(LostItems lostItems :lostItems1){
+            if(lostItems.getFoundStatus()==true){
+                lostItems3.add(lostItems);
+            }
+        }
+        model.addAttribute("listed",lostItems3);
+        return "itemlistpage";
+    }
+
+    // Searching Methods
+    @PostMapping("/searchitem")
+    public String showSearchItemResults(HttpServletRequest request, Model model)
+    {
+        //Get the search string from the result form
+        String searchString = request.getParameter("search");
+        model.addAttribute("search",searchString);
+        model.addAttribute("listed",lostItemsRepository.findAllByItemDescriptionContainingIgnoreCase(searchString));
+        return "itemlistpage";
+    }
+
+    // Basic User Methods
+    @GetMapping("/additem")
+    public String addLostItem(Model model){
+        model.addAttribute("additem",new LostItems());
+        return "reportmissing";
+    }
+
+    @PostMapping("/processitem")
+    public String processLostItem(@Valid @ModelAttribute("additem") LostItems lostItems, BindingResult result, Authentication authentication){
+        if (result.hasErrors()){
+            return "reportmissing";
+        }
+        AppUser appUser = appUserRepository.findAppUserByAppUsername(authentication.getName());
+        lostItems.setAppUser(appUser);
+        lostItemsRepository.save(lostItems);
+        appUser.addLostItems(lostItems);
+        appUserRepository.save(appUser);
+        return "redirect:/lostlist";
+    }
+
+
+    // ADMIN Methods
+    @GetMapping("/addeditem/{id}")
+    public String itemAddedByAdmin(@PathVariable("id") long id, Model model){
+        model.addAttribute("additem",new LostItems());
+        model.addAttribute("user", appUserRepository.findOne(id));
+        return "reportmissing";
+    }
+
+    @PostMapping("/processaddedtem/{id}")
+    public String processAddedItem(@Valid @ModelAttribute("additem") @PathVariable("id") long id,
+                                   LostItems lostItems, BindingResult result){
+        if (result.hasErrors()){
+            return "reportmissing";
+        }
+        AppUser appUser = appUserRepository.findOne(id);
+        lostItems.setAppUser(appUser);
+        lostItemsRepository.save(lostItems);
+        appUser.addLostItems(lostItems);
+        appUserRepository.save(appUser);
+        return "redirect:/lostlist";
+    }
+
+    @RequestMapping("/tofound/{id}")
+    public String changeToFound(@PathVariable("id") long id){
+        LostItems lostItems =lostItemsRepository.findOne(id);
+        lostItems.setFoundStatus(true);
+        return "redirect:/foundlist";
+    }
+
+    @RequestMapping("/tolost/{id}")
+    public String changeToLost(@PathVariable("id") long id){
+        LostItems lostItems =lostItemsRepository.findOne(id);
+        lostItems.setFoundStatus(false);
+        return "redirect:/lostlist";
+    }
+    @GetMapping("/addeditem2")
+    public String itemLonelyAddedByAdmin( Model model){
+        model.addAttribute("additem",new LostItems());
+        return "reportmissing";
+    }
+
+    @PostMapping("/processaddedtem2")
+    public String processLonelyItem(@Valid @ModelAttribute("additem")
+                                   LostItems lostItems, BindingResult result){
+        if (result.hasErrors()){
+            return "reportmissing";
+        }
+        lostItemsRepository.save(lostItems);
+        return "redirect:/lostlist";
+    }
 }
