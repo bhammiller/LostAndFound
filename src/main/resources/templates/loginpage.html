@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <div th:replace="/basetemplate::headstuff"></div>
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="/basetemplate::headstuff"></div>
+
+<div class="wrapper wrapper-full-page">
+    <div class="full-page" data-color="orange" data-image="img/full-screen-image-1.jpg">
+        <nav th:replace=" ::navbarfragement"></nav>
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form th:action="@{/login}" method="post">
+
+                            <!--   if you want to have the card without animation please remove the ".card-hidden" class   -->
+                            <div class="card">
+                                <div class="header text-center">Login</div>
+                                <div class="content">
+                                    <div class="form-group">
+                                        <label>Username</label>
+                                        <input type="text" placeholder="Enter Username" name="username" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="password" placeholder="Password" name="password" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button type="submit" class="btn btn-fill btn-warning btn-wd">Login</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<th:block th:replace="/basetemplate::bootstrap4js"></th:block>
+</body>
+</html>
