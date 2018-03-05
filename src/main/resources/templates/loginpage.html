@@ -8,10 +8,12 @@
 <body>
 <div th:replace="/basetemplate::headstuff"></div>
 
-<div class="wrapper wrapper-full-page">
+<div class="wrapper ">
+
     <div class="full-page" data-color="orange" data-image="img/full-screen-image-1.jpg">
-        <nav th:replace=" ::navbarfragement"></nav>
+
         <div class="content">
+            <nav th:replace=" basetemplate::navbar"></nav>
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">

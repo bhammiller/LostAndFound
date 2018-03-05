@@ -9,8 +9,9 @@
 <div th:replace="/basetemplate::headstuff"></div>
 
 <div class="wrapper wrapper-full-page">
-    <div class="full-page register-page" data-color="azure" data-image="/img/full-screen-image-2.jpg">
-        <!--<nav th:replace="/basetemplate::navbar">-->
+
+    <div class="full-page register-page" data-color="orange" data-image="/img/full-screen-image-2.jpg">
+        <nav th:replace="/basetemplate::navbar"></nav>
         <!--   you can change the color of the filter page using: data-color="blue | azure | green | orange | red | purple" -->
         <div class="content">
             <div class="container">
@@ -58,7 +59,6 @@
     </div>
 
 </div>
-
 
 <th:block th:replace="/basetemplate::bootstrap4js"></th:block>
 </body>
