@@ -6,9 +6,70 @@
 </head>
 <body>
 <div th:replace="/basetemplate::headstuff"></div>
+<div class="wrapper">
+    // Sidebar
+    <div class="main-panel">
+        // Navbar
+        <div class="content">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="header text-center">
+                                <h4 class="title">Table Big Boy</h4>
+                                <p class="category">A table for content management</p>
+                                <br />
+                            </div>
+                            <div class="content table-responsive table-full-width">
+                                <table class="table table-bigboy">
+                                    <thead>
+                                    <tr>
+                                        <th >Image</th>
+                                        <th >Title</th>
+                                        <th class="th-description">Description</th>
+                                        <th class="text-right">Category</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="lostItems : ${listed}">
+                                        <td><img  th:src="${lostItems.itemImage}" onerror="this.src='/img/2.jpg';" alt="Book" style="width:200px;height:200px;"/>
+                                        </td>
+                                        <td th:text="${lostItems.itemTitle}"></td>
+                                        <td th:text="${lostItems.itemDescription}"></td>
+                                        <td th:text="${lostItems.itemType}"></td>
+
+                                        <td class="td-actions">
+                                            <button type="button" rel="tooltip" data-placement="left" title="View Post" class="btn btn-info btn-simple btn-icon">
+                                                <i class="fa fa-image"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" data-placement="left" title="Edit Post" class="btn btn-success btn-simple btn-icon">
+                                                <i class="fa fa-edit"></i>
+                                            </button>
+                                            <button type="button" rel="tooltip" data-placement="left" title="Remove Post" class="btn btn-danger btn-simple btn-icon ">
+                                                <i class="fa fa-times"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div><!--  end card  -->
+                    </div> <!-- end col-md-12 -->
+                </div> <!-- end row -->
+
+            </div>
+        </div>
 
 
-<div class="wrapper wrapper-full-page">
+
+
+    </div>
+</div>
+
+
+<!--<div class="wrapper wrapper-full-page">
     <div class="full-page register-page" data-color="orange" data-image="/img/full-screen-image-2.jpg">
 <div class="content">
     <div class="container-fluid">
@@ -18,7 +79,7 @@
                 <div class="card">
 
                     <div class="toolbar">
-                        <!--        Here you can write extra buttons/actions for the toolbar              -->
+                        &lt;!&ndash;        Here you can write extra buttons/actions for the toolbar              &ndash;&gt;
                     </div>
 
                     <table id="bootstrap-table" class="table">
@@ -43,94 +104,16 @@
 
                         </tbody>
                     </table>
-                </div><!--  end card  -->
-            </div> <!-- end col-md-12 -->
-        </div> <!-- end row -->
+                </div>&lt;!&ndash;  end card  &ndash;&gt;
+            </div> &lt;!&ndash; end col-md-12 &ndash;&gt;
+        </div> &lt;!&ndash; end row &ndash;&gt;
 
     </div>
 </div>
     </div>
-</div>
+</div>-->
 
 <th:block th:replace="/basetemplate::bootstrap4js"></th:block>
 </body>
-<script type="text/javascript">
-    var $table = $('#bootstrap-table');
 
-    function operateFormatter(value, row, index) {
-        return [
-            '<a rel="tooltip" title="View" class="btn btn-simple btn-info btn-icon table-action view" href="javascript:void(0)">',
-            '<i class="fa fa-image"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Edit" class="btn btn-simple btn-warning btn-icon table-action edit" href="javascript:void(0)">',
-            '<i class="fa fa-edit"></i>',
-            '</a>',
-            '<a rel="tooltip" title="Remove" class="btn btn-simple btn-danger btn-icon table-action remove" href="javascript:void(0)">',
-            '<i class="fa fa-remove"></i>',
-            '</a>'
-        ].join('');
-    }
-
-    $().ready(function(){
-        window.operateEvents = {
-            'click .view': function (e, value, row, index) {
-                info = JSON.stringify(row);
-
-                swal('You click view icon, row: ', info);
-                console.log(info);
-            },
-            'click .edit': function (e, value, row, index) {
-                info = JSON.stringify(row);
-
-                swal('You click edit icon, row: ', info);
-                console.log(info);
-            },
-            'click .remove': function (e, value, row, index) {
-                console.log(row);
-                $table.bootstrapTable('remove', {
-                    field: 'id',
-                    values: [row.id]
-                });
-            }
-        };
-
-        $table.bootstrapTable({
-            toolbar: ".toolbar",
-            clickToSelect: true,
-            showRefresh: true,
-            search: true,
-            showToggle: true,
-            showColumns: true,
-            pagination: true,
-            searchAlign: 'left',
-            pageSize: 8,
-            clickToSelect: false,
-            pageList: [8,10,25,50,100],
-
-            formatShowingRows: function(pageFrom, pageTo, totalRows){
-                //do nothing here, we don't want to show the text "showing x of y from..."
-            },
-            formatRecordsPerPage: function(pageNumber){
-                return pageNumber + " rows visible";
-            },
-            icons: {
-                refresh: 'fa fa-refresh',
-                toggle: 'fa fa-th-list',
-                columns: 'fa fa-columns',
-                detailOpen: 'fa fa-plus-circle',
-                detailClose: 'fa fa-minus-circle'
-            }
-        });
-
-        //activate the tooltips after the data table is initialized
-        $('[rel="tooltip"]').tooltip();
-
-        $(window).resize(function () {
-            $table.bootstrapTable('resetView');
-        });
-
-
-    });
-
-</script>
 </html>
