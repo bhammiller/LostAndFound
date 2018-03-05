@@ -38,7 +38,7 @@ public class MainController {
 
     @RequestMapping("/login")
     public String login() {
-        return "login";
+        return "loginpage";
     }
 
     // Security and User Methods
@@ -46,7 +46,7 @@ public class MainController {
     @GetMapping("/register")
     public String registerUser(Model model) {
         model.addAttribute("newUser", new AppUser());
-        return "registration";
+        return "registrationpage";
     }
 
     @PostMapping("/register")
@@ -54,7 +54,7 @@ public class MainController {
 
         if (result.hasErrors()) {
             System.out.println(result.toString());
-            return "registration";
+            return "registrationpage";
         } else {
 
             model.addAttribute(newUser.getAppUsername() + " created");
@@ -62,7 +62,7 @@ public class MainController {
             AppRole r = appRoleRepository.findAppRoleByRoleName("USER");
             newUser.addRole(r);
             appUserRepository.save(newUser);
-            return "redirect:/login";
+            return "redirect:/";
         }
     }
 
@@ -146,6 +146,12 @@ public class MainController {
 
 
     // ADMIN Methods
+    @GetMapping("/userslist")
+    public String showUsersList(Model model){
+        model.addAttribute("userlist", appUserRepository.findAll());
+        return "userslist";
+    }
+
     @GetMapping("/addeditem/{id}")
     public String itemAddedByAdmin(@PathVariable("id") long id, Model model){
         model.addAttribute("additem",new LostItems());
