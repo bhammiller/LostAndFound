@@ -79,12 +79,12 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="/lostlist">Go to List of Lost Items</a></li>
-                        <li><a href="/additem">Report New Lost Item</a></li>
-                        <li><a href="/usersfound">See Your Found Items</a></li>
+                        <li sec:authorize="hasAnyAuthority('USER','ADMIN')"><a href="/additem">Report New Lost Item</a></li>
+                        <li sec:authorize="hasAuthority('USER')"><a href="/usersfound">See Your Found Items</a></li>
                         <li class="divider"></li>
-                        <li><a href="/userslist" class="text-primary">Show All Users</a></li>
-                        <li><a href="/foundlist" class="text-primary">Show All Found Items</a></li>
-                        <li><a href="/addeditem2" class="text-primary">Add Items for No One</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a href="/userslist" class="text-primary">Show All Users</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a href="/foundlist" class="text-primary">Show All Found Items</a></li>
+                        <li sec:authorize="hasAuthority('ADMIN')"><a href="/addeditem2" class="text-primary">Add Items for No One</a></li>
 
                     </ul>
                 </li>
@@ -100,20 +100,26 @@
                         </p>
                     </a>
                     <ul class="dropdown-menu dropdown-with-icons">
-                        <li>
+                        <li >
+                            <a href="/">
+                                <i class="pe-7s-close-circle"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li sec:authorize="isAnonymous()">
                             <a href="/register">
                                 <i class="pe-7s-close-circle"></i>
                                 Register
                             </a>
                         </li>
-                        <li>
+                        <li sec:authorize="isAnonymous()">
                             <a href="/login">
                                 <i class="pe-7s-close-circle"></i>
                                 Login
                             </a>
                         </li>
                         <li class="divider"></li>
-                        <li>
+                        <li sec:authorize="hasAnyAuthority('USER','ADMIN')">
                             <a href="/logout" class="text-danger">
                                 <i class="pe-7s-close-circle"></i>
                                 Log out

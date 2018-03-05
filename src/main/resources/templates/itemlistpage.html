@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.org"
+      xmlns:sec="http://www.tymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <div th:replace="/basetemplate::headstuff"></div>
     <title>Title</title>
@@ -7,7 +8,7 @@
 <body>
 <div th:replace="/basetemplate::headstuff"></div>
 <div class="wrapper">
-    <div class="sidebar" data-color="orange" data-image="../../assets/img/full-screen-image-3.jpg">
+    <div class="sidebar" data-color="orange" data-image="/img/full-screen-image-3.jpg">
         <!--
 
             Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
@@ -38,7 +39,7 @@
                                         <th >Title</th>
                                         <th class="th-description">Description</th>
                                         <th class="text-right">Category</th>
-                                        <th>Change Status</th>
+                                        <th sec:authorize="hasAuthority('ADMIN')">Change Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -48,7 +49,7 @@
                                         <td th:text="${lostItems.itemTitle}"></td>
                                         <td th:text="${lostItems.itemDescription}"></td>
                                         <td th:text="${lostItems.itemType}"></td>
-                                        <td >
+                                        <td sec:authorize="hasAuthority('ADMIN')">
                                             <a th:unless="${lostItems.foundStatus}"  type="button" th:href="@{/tofound/{id}(id=${lostItems.id})}"  class="btn btn-dark" role="button">Change to Found</a>
 
                                             <a th:if="${lostItems.foundStatus}" type="button" th:href="@{/tolost/{id}(id=${lostItems.id})}"   class="btn btn-dark" role="button">Change to Lost</a>
