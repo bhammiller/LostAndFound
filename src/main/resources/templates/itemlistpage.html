@@ -26,8 +26,8 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="header text-center">
-                                <h4 class="title">Table Big Boy</h4>
-                                <p class="category">A table for content management</p>
+                                <h2 class="title" >Item List</h2>
+                                <h4 class="category" th:text="${message}"></h4>
                                 <br />
                             </div>
                             <div class="content table-responsive table-full-width">
@@ -38,7 +38,7 @@
                                         <th >Title</th>
                                         <th class="th-description">Description</th>
                                         <th class="text-right">Category</th>
-                                        <th></th>
+                                        <th>Change Status</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -48,8 +48,15 @@
                                         <td th:text="${lostItems.itemTitle}"></td>
                                         <td th:text="${lostItems.itemDescription}"></td>
                                         <td th:text="${lostItems.itemType}"></td>
+                                        <td >
+                                            <a th:unless="${lostItems.foundStatus}"  type="button" th:href="@{/tofound/{id}(id=${lostItems.id})}"  class="btn btn-dark" role="button">Change to Found</a>
 
-                                        <td class="td-actions">
+                                            <a th:if="${lostItems.foundStatus}" type="button" th:href="@{/tolost/{id}(id=${lostItems.id})}"   class="btn btn-dark" role="button">Change to Lost</a>
+                                            <!--<a type="button" th:if="${param.error}" th:href="@{/tofound/{id}(id=${lostItems.id})}" class="btn btn-dark" role="button">Change to Lost</a>
+                                            <a type="button" th:if="${param.error}" th:href="@{/tolost/{id}(id=${lostItems.id})}" class="btn btn-dark" role="button">Change to Found</a>-->
+                                        </td>
+
+                                        <!--<td class="td-actions">
                                             <button type="button" rel="tooltip" data-placement="left" title="View Post" class="btn btn-info btn-simple btn-icon">
                                                 <i class="fa fa-image"></i>
                                             </button>
@@ -59,7 +66,7 @@
                                             <button type="button" rel="tooltip" data-placement="left" title="Remove Post" class="btn btn-danger btn-simple btn-icon ">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                        </td>
+                                        </td>-->
                                     </tr>
                                     </tbody>
                                 </table>
@@ -67,61 +74,10 @@
                         </div><!--  end card  -->
                     </div> <!-- end col-md-12 -->
                 </div> <!-- end row -->
-
             </div>
         </div>
-
-
-
-
     </div>
 </div>
-
-
-<!--<div class="wrapper wrapper-full-page">
-    <div class="full-page register-page" data-color="orange" data-image="/img/full-screen-image-2.jpg">
-<div class="content">
-    <div class="container-fluid">
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-
-                    <div class="toolbar">
-                        &lt;!&ndash;        Here you can write extra buttons/actions for the toolbar              &ndash;&gt;
-                    </div>
-
-                    <table id="bootstrap-table" class="table">
-                        <thead>
-                        <th data-field="itemName" data-sortable="true">Item Type</th>
-                        <th data-field="servingSize" data-sortable="true">Image</th>
-                        <th data-field="itemCategory" data-sortable="true">Item Title</th>
-                        <th data-field="servingSize" data-sortable="true">Title</th>
-                        <th data-field="servingSize" data-sortable="true">Description</th>
-
-                        </thead>
-                        <tbody>
-                        <tr th:each="lostItems : ${listed}">
-                            <td th:text="${lostItems.itemType}"></td>
-                            <td>
-                                <img  th:src="${lostItems.itemImage}" onerror="this.src='/img/2.jpg';" alt="Book" style="width:200px;height:200px;"/>
-                            </td>
-                            <td th:text="${lostItems.itemTitle}"></td>
-                            <td th:text="${lostItems.itemDescription}"></td>
-
-                        </tr>
-
-                        </tbody>
-                    </table>
-                </div>&lt;!&ndash;  end card  &ndash;&gt;
-            </div> &lt;!&ndash; end col-md-12 &ndash;&gt;
-        </div> &lt;!&ndash; end row &ndash;&gt;
-
-    </div>
-</div>
-    </div>
-</div>-->
-
 <th:block th:replace="/basetemplate::bootstrap4js"></th:block>
 </body>
 

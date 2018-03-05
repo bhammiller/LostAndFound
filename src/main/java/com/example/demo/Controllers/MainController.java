@@ -28,6 +28,10 @@ public class MainController {
     @Autowired
     LostItemsRepository lostItemsRepository;
 
+    // Global Variables
+
+    AppUser newAppUser;
+
 
     /////////////// METHODS //////////////////
 
@@ -62,7 +66,7 @@ public class MainController {
             AppRole r = appRoleRepository.findAppRoleByRoleName("USER");
             newUser.addRole(r);
             appUserRepository.save(newUser);
-            return "redirect:/";
+            return "redirect:/login";
         }
     }
 
@@ -72,30 +76,35 @@ public class MainController {
     @RequestMapping("/lostlist")
     public String showLostList(Model model){
         model.addAttribute("listed",lostItemsRepository.findAllByFoundStatusIs(false) );
+        model.addAttribute("message", "Lost Items");
         return "itemlistpage";
     }
 
     @RequestMapping("/foundlist")
     public String showFoundList(Model model){
         model.addAttribute("listed", lostItemsRepository.findAllByFoundStatusIs(true));
+        model.addAttribute("message", "Found Items");
         return "itemlistpage";
     }
 
     @RequestMapping("/clotheslist")
     public String showLostClothes(Model model){
         model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("clothes"));
+        model.addAttribute("message", "Clothes");
         return "itemlistpage";
     }
 
     @RequestMapping("/petlist")
     public String showLostPets(Model model){
         model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("pet"));
+        model.addAttribute("message", "Pets");
         return "itemlistpage";
     }
 
     @RequestMapping("/otherlist")
     public String showLostOther(Model model){
         model.addAttribute("listed", lostItemsRepository.findAllByItemTypeIs("other"));
+        model.addAttribute("message", "Miscellany");
         return "itemlistpage";
     }
 
@@ -110,6 +119,7 @@ public class MainController {
             }
         }
         model.addAttribute("listed",lostItems3);
+        model.addAttribute("message", appUser.getAppUsername()+" Found Items");
         return "itemlistpage";
     }
 
@@ -156,22 +166,21 @@ public class MainController {
     @GetMapping("/addeditem/{id}")
     public String itemAddedByAdmin(@PathVariable("id") long id, Model model){
         model.addAttribute("additem",new LostItems());
-        model.addAttribute("user", appUserRepository.findOne(id));
+        newAppUser=appUserRepository.findOne(id);
         return "reportmissing2";
     }
 
-    @PostMapping("/processaddedtem/{id}")
-    public String processAddedItem(@Valid @ModelAttribute("additem") @PathVariable("id") long id,
+    @PostMapping("/processaddedtem")
+    public String processAddedItem(@Valid @ModelAttribute("additem")
                                    LostItems lostItems, BindingResult result){
         if (result.hasErrors()){
             return "reportmissing2";
         }
-        AppUser appUser = appUserRepository.findOne(id);
-        lostItems.setAppUser(appUser);
+        lostItems.setAppUser(newAppUser);
         lostItems.setFoundStatus(false);
         lostItemsRepository.save(lostItems);
-        appUser.addLostItems(lostItems);
-        appUserRepository.save(appUser);
+        newAppUser.addLostItems(lostItems);
+        appUserRepository.save(newAppUser);
         return "redirect:/lostlist";
     }
 
@@ -179,6 +188,7 @@ public class MainController {
     public String changeToFound(@PathVariable("id") long id){
         LostItems lostItems =lostItemsRepository.findOne(id);
         lostItems.setFoundStatus(true);
+        lostItemsRepository.save(lostItems);
         return "redirect:/foundlist";
     }
 
@@ -186,6 +196,7 @@ public class MainController {
     public String changeToLost(@PathVariable("id") long id){
         LostItems lostItems =lostItemsRepository.findOne(id);
         lostItems.setFoundStatus(false);
+        lostItemsRepository.save(lostItems);
         return "redirect:/lostlist";
     }
     @GetMapping("/addeditem2")

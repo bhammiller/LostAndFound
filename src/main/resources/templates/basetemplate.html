@@ -60,10 +60,10 @@
         </div>
         <div class="collapse navbar-collapse">
 
-            <form class="navbar-form navbar-left navbar-search-form" role="search">
+            <form th:action="@{/searchitem}" method="post" class="navbar-form navbar-left navbar-search-form" role="search">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-search"></i></span>
-                    <input type="text" value="" class="form-control" placeholder="Search...">
+                    <input type="text" value="" name="search" class="form-control" placeholder="Search...">
                 </div>
             </form>
 
@@ -101,20 +101,20 @@
                     </a>
                     <ul class="dropdown-menu dropdown-with-icons">
                         <li>
-                            <a href="#">
+                            <a href="/register">
                                 <i class="pe-7s-close-circle"></i>
                                 Register
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/login">
                                 <i class="pe-7s-close-circle"></i>
                                 Login
                             </a>
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#" class="text-danger">
+                            <a href="/logout" class="text-danger">
                                 <i class="pe-7s-close-circle"></i>
                                 Log out
                             </a>
