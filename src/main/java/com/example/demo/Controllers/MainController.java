@@ -138,6 +138,7 @@ public class MainController {
         }
         AppUser appUser = appUserRepository.findAppUserByAppUsername(authentication.getName());
         lostItems.setAppUser(appUser);
+        lostItems.setFoundStatus(false);
         lostItemsRepository.save(lostItems);
         appUser.addLostItems(lostItems);
         appUserRepository.save(appUser);
@@ -156,17 +157,18 @@ public class MainController {
     public String itemAddedByAdmin(@PathVariable("id") long id, Model model){
         model.addAttribute("additem",new LostItems());
         model.addAttribute("user", appUserRepository.findOne(id));
-        return "reportmissing";
+        return "reportmissing2";
     }
 
     @PostMapping("/processaddedtem/{id}")
     public String processAddedItem(@Valid @ModelAttribute("additem") @PathVariable("id") long id,
                                    LostItems lostItems, BindingResult result){
         if (result.hasErrors()){
-            return "reportmissing";
+            return "reportmissing2";
         }
         AppUser appUser = appUserRepository.findOne(id);
         lostItems.setAppUser(appUser);
+        lostItems.setFoundStatus(false);
         lostItemsRepository.save(lostItems);
         appUser.addLostItems(lostItems);
         appUserRepository.save(appUser);
@@ -189,15 +191,16 @@ public class MainController {
     @GetMapping("/addeditem2")
     public String itemLonelyAddedByAdmin( Model model){
         model.addAttribute("additem",new LostItems());
-        return "reportmissing";
+        return "reportmissing3";
     }
 
     @PostMapping("/processaddedtem2")
     public String processLonelyItem(@Valid @ModelAttribute("additem")
                                    LostItems lostItems, BindingResult result){
         if (result.hasErrors()){
-            return "reportmissing";
+            return "reportmissing3";
         }
+        lostItems.setFoundStatus(false);
         lostItemsRepository.save(lostItems);
         return "redirect:/lostlist";
     }

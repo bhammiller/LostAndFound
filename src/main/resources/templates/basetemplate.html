@@ -4,7 +4,7 @@
 <head>
     <th:block th:fragment="headstuff">
         <meta charset="UTF-8"/>
-        <link rel="icon" type="image/png" href="/img/favicon.ico"/>
+        <link rel="icon" type="image/png" href="/img/2.jpg"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -28,7 +28,7 @@
 
 <th:block th:fragment="headstuff">
     <meta charset="UTF-8"/>
-    <link rel="icon" type="image/png" href="/img/favicon.ico"/>
+    <link rel="icon" type="image/png" href="/img/2.jpg"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
@@ -47,7 +47,85 @@
     <link href="/css/pe-icon-7-stroke.css" rel="stylesheet" />
 </th:block>
 
+<nav th:fragment="navbar" class="navbar navbar-default navbar-fixed">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Dashboard</a>
+        </div>
+        <div class="collapse navbar-collapse">
 
+            <form class="navbar-form navbar-left navbar-search-form" role="search">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input type="text" value="" class="form-control" placeholder="Search...">
+                </div>
+            </form>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-gavel"></i>
+                        <p>Actions</p>
+                        <p class="hidden-md hidden-lg">
+                            Actions
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/lostlist">Go to List of Lost Items</a></li>
+                        <li><a href="/additem">Report New Lost Item</a></li>
+                        <li><a href="/usersfound">See Your Found Items</a></li>
+                        <li class="divider"></li>
+                        <li><a href="/userslist" class="text-info">Show All Users</a></li>
+                        <li><a href="/foundlist" class="text-info">Show All Found Items</a></li>
+                        <li><a href="/addeditem2" class="text-info">Add Items for No One</a></li>
+
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown dropdown-with-icons">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-list"></i>
+                        <p class="hidden-md hidden-lg">
+                            More
+                            <b class="caret"></b>
+                        </p>
+                    </a>
+                    <ul class="dropdown-menu dropdown-with-icons">
+                        <li>
+                            <a href="#">
+                                <i class="pe-7s-close-circle"></i>
+                                Register
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="pe-7s-close-circle"></i>
+                                Login
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" class="text-danger">
+                                <i class="pe-7s-close-circle"></i>
+                                Log out
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
 
 
 <span th:fragment="bootstrap4js">
