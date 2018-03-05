@@ -7,10 +7,75 @@
 </head>
 <body>
 <div th:replace="/basetemplate::headstuff"></div>
-<nav th:replace="/basetemplate::navbar">
-</nav>
-<h1>Success!</h1>
 
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-color="orange" data-image="../../assets/img/full-screen-image-3.jpg">
+        <!--
+
+            Tip 1: you can change the color of the sidebar using: data-color="blue | azure | green | orange | red | purple"
+            Tip 2: you can also add an image using data-image tag
+
+        -->
+    </div>
+    <nav th:replace="/basetemplate::navbar">
+    </nav>
+    <div class="main-panel">
+        <!-- NavBar-->
+
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <div class="card">
+                            <div class="header">
+                                <legend>Brandon's Lost and Found</legend>
+                            </div>
+                            <div class="content">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="header">Clothes</div>
+                                                    <a href="/clotheslist">
+                                                        <img src="/img/clothes.jpg" alt="clothes" style="width:250px;height:250px;"/>
+                                                    </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="header">Pets</div>
+                                                <a href="/petlist">
+                                                    <img src="/img/pet-ownership-2.jpg" alt="pets" style="width:250px;height:250px;"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="header">Miscellany</div>
+                                                <a href="/otherlist">
+                                                <img src="/img/objects_982.jpg" alt="miscellany" style="width:250px;height:250px;"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card -->
+
+                    </div> <!-- end col-md-12 -->
+                </div> <!-- end row -->
+
+            </div>
+        </div>
+
+
+
+
+    </div>
+</div>
 
 <th:block th:replace="/basetemplate::bootstrap4js"></th:block>
 </body>
